@@ -1,0 +1,142 @@
+不好意思，没相关文档，和以前的版本兼容。
+
+其他可参考2.1版文档，这里给个简单函数说明
+
+简单函数说明: 
+// Chanlun begin
+// added by pp
+// 大写为可单独调用的函数,小写为不可单独调用的函数.
+// 函数如无特别说明, 均不需要参数
+// 小写函数依赖关系 无特别说明 均为如：bilast依赖bi， zsgg依赖zs这种关系
+// 注意kxian就是kx(为了和悟多兼容) kxian是本插件所有的小写函数都需要依赖的函数(使用放在最前面调用)
+// 注意依赖之间的顺序(->表示依赖) zs->duan->bi->kxian
+// 和悟多兼容的三个公式 kxian bi duan, 均以1 -1 表示确定成立顶底(其他值的含义请参考函数说明)
+TT // 开发调试测试用
+WRITE //
+READ // 
+VERSION // 版本 如 1.013 1主版本号 01 小版本号 第三位小数 1 alpha(内测版) 2 beta(公测版) 3 standard标准版 4-5标准修正版 9 release最终版
+DATE // 发布日期 如20101221 1.013.20101221
+
+JXZT // 均线状态 @since 1.01
+JXYL // 均线压力 返回1-8类均线 @since 1.01 
+JXZC // 均线支撑 返回1-8类均线 @since 1.01
+JXYL2 // 均线压力 返回5 13 21 34 55 89 144 233 @since 1.02
+JXZC2 // 均线支撑 返回5 13 21 34 55 89 144 233 @since 1.02
+
+EMAC // 指数平滑移动平均(收盘价) 例:EMAC(5) @since 2.02
+EMA // 指数平滑移动平均(收盘价) 例:EMA(C, 5) @since 2.02
+
+DATATYPE // 数据类型 @since 3.01
+
+kxian // 初始化K线 分型 以及其他数据  @since 1.01
+kxg // 缠K高点(包含处理) @since 1.01
+kxd // 缠K低点(包含处理) @since 1.01
+kxfx // K线方向(包含处理) @since 1.01
+kxno // K线编号 @since 2.01
+kxnobh // K线编号(包含处理) @since 2.01
+kxqj // 顶底K线区间(包含处理) @since 2.01
+kxqk // K线是否存在缺口 0没有 1未封闭上涨缺口 2已封闭上涨缺口 -1未封闭下跌缺口 -2已封闭下跌缺口 @since 2.01
+
+bi // 笔 @since 1.01 @依赖 kxian
+bilast // 距离上一笔结束的周期 @since 1.02
+bigglast // 距离上第1个笔高点的周期 @since 1.02 
+biddlast // 距离上第1个笔低点的周期 @since 1.02
+
+duan // 段 @since 1.02 @依赖 bi
+duanlast // 距离上一段结束的周期 @since 1.02
+duangglast // 距离上第1个段高点的周期 @since 1.02 
+duanddlast // 距离上第1个段低点的周期 @since 1.02
+
+zs // 走势中枢 @since 1.02 @依赖 duan
+zszg // 中枢ZG @since 1.02
+zszd // 中枢ZD @since 1.02
+zsgg // 中枢GG @since 1.02
+zsdd // 中枢DD @since 1.02
+zszz // 中枢中轴(震荡监视器) @since 1.02
+zskslast // 距离上一个中枢开始的周期 @since 1.02
+zsjslast // 距离上一个中枢结束的周期 @since 1.02
+zstype // 0 1 盘整 @since 3.01
+
+macd //MACD @since 2.02 @参数3个 参见示例 macd的其他属性依赖macd函数, macd 不依赖其他
+macddiff //MACD dif值 @since 2.02
+macddea //MACD dea值 @since 2.02
+macdarea //MACD面积 @since 2.02
+macdaream // 平均面积//MACD @since 2.02
+macdlast //MACD上次金叉死叉到现在的周期 @since 2.02
+
+// 均线缠绕
+kiss //KISS @since 2.02 @参数2个 参见示例  kiss的其他属性依赖kiss函数, kiss不依赖其他, 使用方式"chanlun@kiss"(5, 10)
+kissshort //KISS @since 2.02
+kisslong //KISS @since 2.02
+kissarea //KISS @since 2.02
+kissaream // 平均面积//KISS @since 2.02
+kisslast //KISS 上次金叉死叉到现在的周期 @since 2.02
+
+daily //每日走势分类 @since 3.01
+dailytrend //每日走势分类 @since 3.01
+dailypower // @since 3.01
+dailykxno // @since 3.01
+
+// 依赖段
+// 这个主要是从笔的形态来分析的，不一定对
+b_bi // @since 3.01
+b_duan // @since 3.01 这个只是用来测试 段是滞后的
+
+b_pz // @since 3.01
+b_lqs // @since 3.01
+b_l3b // @since 3.01
+
+b_1b // @since 3.01
+b_2b // @since 3.01
+b_3b // @since 3.01
+
+s_lqs // @since 3.01
+s_l3s // @since 3.01
+
+
+
+//////
+//函数 使用示例
+
+// KISS使用
+vKiss:"chanlun@kiss"(5, 10), COLORSTICK;
+vKissShort:"chanlun@kissshort", colorwhite, linethick0;
+vKissLong:"chanlun@kisslong", coloryellow, linethick0;
+vKissAream:"chanlun@kissaream", colorblue;
+vKissArea:"chanlun@kissarea", colorgreen, linethick0;
+vKissLast:"chanlun@kisslast", colormagenta, linethick0;
+
+
+
+// MACD使用
+vMacd:"chanlun@macd"(12, 26, 9), COLORSTICK;
+vDiff:"chanlun@macddiff";
+vDea:"chanlun@macddea";
+vMacdarea:"chanlun@macdarea", linethick0;
+vMacdlast:"chanlun@macdlast", linethick0;
+vMacdaream:"chanlun@macdaream";
+
+
+
+// 买卖点使用示例
+REFLINE: -3,-2, -1, 0, 1, 2,3;
+
+kxian:="chanlun@kxian";
+bi:="chanlun@bi";
+duan:="chanlun@duan";
+
+s_lqs:"chanlun@s_lqs", colorgreen;
+
+b_bi:"chanlun@b_bi", linethick0;
+b_duan:"chanlun@b_duan",linethick0;{这个无实用性 滞后 纯用来验证}
+
+b_pz:"chanlun@b_pz", colorwhite;
+b_1b:"chanlun@b_1b", colorred, linethick2;
+b_2b:"chanlun@b_2b", coloryellow;
+b_3b:"chanlun@b_3b", colormagenta, linethick2;
+
+b_lqs:"chanlun@b_lqs", colorred;
+b_l3b:"chanlun@b_l3b", colormagenta;
+
+BB: b_pz>0 OR b_1b>0 OR b_2b>0 OR b_3b>0 OR b_lqs>0 OR b_l3b>0, linethick0;
+底分型: BB AND REF(BB,1)>0, linethick0;
